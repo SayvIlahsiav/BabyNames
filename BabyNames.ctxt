@@ -1,4 +1,9 @@
 #BlueJ class context
 comment0.target=BabyNames
-comment0.text=\r\n\ Write\ a\ description\ of\ BabyNames\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-numComments=1
+comment1.params=
+comment1.target=void\ printNames()
+comment2.params=fr
+comment2.target=void\ totalBirths(edu.duke.FileResource)
+comment3.params=
+comment3.target=void\ testTotalBirths()
+numComments=4
