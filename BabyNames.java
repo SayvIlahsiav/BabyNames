@@ -24,30 +24,40 @@ public class BabyNames {
     }
 
     public void totalBirths(FileResource fr) {
-        int totalBirths = 0;
-        int totalBoys = 0;
-        int totalGirls = 0;
-        int totalNames = 0;
-        int totalBNames = 0;
-        int totalGNames = 0;
-        for (CSVRecord rec : fr.getCSVParser(false)) {
-            int numBorn = Integer.parseInt(rec.get(2));
-            totalBirths += numBorn;
-            if (rec.get(1).equals("M")) {
-                totalBoys += numBorn;
-                totalBNames++;
+        int totalMaleBirths = 0;
+        int totalFemaleBirths = 0;
+        int maleNameCount = 0;
+        int femaleNameCount = 0;
+    
+        for (CSVRecord record : fr.getCSVParser(false)) {
+            int numBorn = tryParse(record.get(2));
+            if ("M".equals(record.get(1))) {
+                totalMaleBirths += numBorn;
+                maleNameCount++;
             } else {
-                totalGirls += numBorn;
-                totalGNames++;
+                totalFemaleBirths += numBorn;
+                femaleNameCount++;
             }
         }
-        totalNames = totalBNames + totalGNames;
-        System.out.println("total names = " + totalNames);
-        System.out.println("total births = " + totalBirths);
-        System.out.println("total girls names = " + totalGNames);
-        System.out.println("total girls = " + totalGirls);
-        System.out.println("total boys names = " + totalBNames);
-        System.out.println("total boys = " + totalBoys);
+    
+        printSummary("Total names = ", maleNameCount + femaleNameCount);
+        printSummary("Total births = ", totalMaleBirths + totalFemaleBirths);
+        printSummary("Total girls' names = ", femaleNameCount);
+        printSummary("Total girls = ", totalFemaleBirths);
+        printSummary("Total boys' names = ", maleNameCount);
+        printSummary("Total boys = ", totalMaleBirths);
+    }
+    
+    private void printSummary(String message, int value) {
+        System.out.println(message + " = " + value);
+    }
+    
+    private int tryParse(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0; // or handle the exception as needed
+        }
     }
     
     public void testTotalBirths() {
