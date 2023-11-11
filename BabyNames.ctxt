@@ -10,4 +10,6 @@ comment4.params=value
 comment4.target=int\ tryParse(java.lang.String)
 comment5.params=
 comment5.target=void\ testTotalBirths()
-numComments=6
+comment6.params=args
+comment6.target=void\ main(java.lang.String[])
+numComments=7

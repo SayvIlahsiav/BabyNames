@@ -64,5 +64,10 @@ public class BabyNames {
         FileResource fr = new FileResource();
         totalBirths(fr);
     }
+    
+    public static void main(String[] args) {
+        BabyNames bn = new BabyNames();
+        bn.testTotalBirths();
+    }
 
 }
