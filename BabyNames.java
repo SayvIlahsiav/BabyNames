@@ -83,8 +83,26 @@ public class BabyNames {
         System.out.println(getRank(2012, "Mason", "M"));
     }
     
+    public String getName(int year, int rank, String gender) {
+        //FileResource fr = new FileResource();
+        FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
+        int count = 0;
+        for (CSVRecord record : fr.getCSVParser(false)) {
+            if (gender.equals(record.get(1)))
+            {
+                count++;
+                if (count == rank) return record.get(0);
+            }
+        }
+        return "NO NAME";
+    }
+    
+    public void testGetName() {
+        System.out.println(getName(2012, 2, "M"));
+    }
+    
     public static void main(String[] args) {
         BabyNames bn = new BabyNames();
-        bn.testGetRank();
+        bn.testGetName();
     }
 }
