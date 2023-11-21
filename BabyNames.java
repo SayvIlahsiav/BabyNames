@@ -14,6 +14,8 @@ import org.apache.commons.csv.*;
 import java.io.*;
 
 public class BabyNames {
+
+    // Displays names with at least 100 births from the CSV file.
     public void printNames() {
         FileResource fr = new FileResource();
         for (CSVRecord rec : fr.getCSVParser(false)) {
@@ -23,13 +25,13 @@ public class BabyNames {
             }
         }
     }
-
+    
+    // Calculates and prints total births and name counts by gender from the given FileResource.
     public void totalBirths(FileResource fr) {
         int totalMaleBirths = 0;
         int totalFemaleBirths = 0;
         int maleNameCount = 0;
         int femaleNameCount = 0;
-    
         for (CSVRecord record : fr.getCSVParser(false)) {
             int numBorn = tryParse(record.get(2));
             if ("M".equals(record.get(1))) {
@@ -40,7 +42,6 @@ public class BabyNames {
                 femaleNameCount++;
             }
         }
-    
         printSummary("Total names = ", maleNameCount + femaleNameCount);
         printSummary("Total births = ", totalMaleBirths + totalFemaleBirths);
         printSummary("Total girls' names = ", femaleNameCount);
@@ -49,10 +50,12 @@ public class BabyNames {
         printSummary("Total boys = ", totalMaleBirths);
     }
     
+    // Helper method to print formatted summary messages.
     private void printSummary(String message, int value) {
         System.out.println(message + " = " + value);
     }
     
+    // Attempts to parse a string to an integer, returns 0 on failure.
     private int tryParse(String value) {
         try {
             return Integer.parseInt(value);
@@ -61,11 +64,13 @@ public class BabyNames {
         }
     }
     
+    // Tests the totalBirths method using a FileResource.
     public void testTotalBirths() {
         FileResource fr = new FileResource();
         totalBirths(fr);
     }
     
+    //  Returns the rank of a name for a given year and gender.
     public int getRank(int year, String name, String gender) {
         //FileResource fr = new FileResource();
         FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
@@ -80,10 +85,12 @@ public class BabyNames {
         return -1;
     }
     
+    // Tests the getRank method with predefined values.
     public void testGetRank() {
         System.out.println(getRank(2012, "Mason", "M"));
     }
     
+    // Retrieves the name corresponding to the rank in a specific year and gender.
     public String getName(int year, int rank, String gender) {
         //FileResource fr = new FileResource();
         FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
@@ -98,10 +105,12 @@ public class BabyNames {
         return "NO NAME";
     }
     
+    // Tests the getName method with predefined values.
     public void testGetName() {
         System.out.println(getName(2012, 2, "M"));
     }
     
+    // Determines what a name from one year would have been in another year.
     public void whatIsNameInYear(String name, int year, int newYear, String gender) {
         int rank = getRank(year, name, gender);
         if (rank == -1) {
@@ -112,10 +121,12 @@ public class BabyNames {
         System.out.println(name + " born in " + year + " would be " + newName + " if born in " + newYear + ".");
     }
     
+    // Tests whatIsNameInYear with predefined values.
     public void testWhatIsNameInYear() {
         whatIsNameInYear("Valerie", 2001, 1920, "F");
     }
     
+    // Finds the year when a name had its highest rank.
     public int yearOfHighestRank(String name, String gender) {
         int highestYear = -1;
         int highestRank = Integer.MAX_VALUE;
@@ -141,10 +152,12 @@ public class BabyNames {
         return highestYear;
     }
     
+    // Tests yearOfHighestRank with predefined values.
     public void testYearOfHighestRank() {
         System.out.println(yearOfHighestRank("Mason", "M"));
     }
     
+    // Calculates the average rank of a name over all files.
     public double getAverageRank(String name, String gender) {
         double averageRank = -1.0;
         double totalRank = 0.0;
@@ -172,13 +185,15 @@ public class BabyNames {
         return averageRank;
     }
     
+    // Tests getAverageRank with predefined values.
     public void testGetAverageRank() {
         System.out.println(getAverageRank("Jacob", "M"));
     }
     
+    // Calculates total births of names ranked higher than a given name in a year.
     public int getTotalBirthsRankedHigher(int year, String name, String gender) {
-        FileResource fr = new FileResource();
-        //FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
+        //FileResource fr = new FileResource();
+        FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
         int currentRank = 0;
         int totalBirthsRankedHigher = 0;
         for (CSVRecord record : fr.getCSVParser(false)) {
@@ -193,6 +208,7 @@ public class BabyNames {
         return -1;
     }
     
+    // Tests getTotalBirthsRankedHigher with predefined values.
     public void testGetTotalBirthsRankedHigher() {
         System.out.println(getTotalBirthsRankedHigher(2012, "William", "M"));
     }
