@@ -215,6 +215,44 @@ public class BabyNames {
     
     public static void main(String[] args) {
         BabyNames bn = new BabyNames();
-        bn.testGetTotalBirthsRankedHigher();
+        Scanner scn = new Scanner(System.in);
+        while (true) {
+        System.out.println();
+        System.out.println("What do you want to do? Type 1, 2, 3, 4, 5, 6, 7, or 8:");
+        System.out.println("1: Display Popular Names - Names with at least 100 births.");
+        System.out.println("2: Calculate Total Births - Displays total births and name counts by gender.");
+        System.out.println("3: Check Name Rank - Displays the rank of a name for a specified year and gender");
+        System.out.println("4: Find Name by Rank - Retrieves the name corresponding to a given rank in a specific year and gender");
+        System.out.println("5: Compare Name Across Years - Determines what a name from one year would have been in another year.");
+        System.out.println("6: Year of Highest Rank - Finds the year when a name had its highest rank.");
+        System.out.println("7: Calculate Average Rank - Calculates the average rank of a name over all files.");
+        System.out.println("8: Births Before Rank - Calculates total births of names ranked higher than a given name in a year.");
+        
+        System.out.println();
+        String choice = scn.nextLine();
+        System.out.println();
+        
+        if (choice.equals("1")) bn.printNames();
+        else if (choice.equals("2")) bn.testTotalBirths();
+        else if (choice.equals("3")) bn.testGetRank();
+        else if (choice.equals("4")) bn.testGetName();
+        else if (choice.equals("5")) bn.testWhatIsNameInYear();
+        else if (choice.equals("6")) bn.testYearOfHighestRank();
+        else if (choice.equals("7")) bn.testGetAverageRank();
+        else if (choice.equals("8")) bn.testGetTotalBirthsRankedHigher();
+        else {
+            System.out.println("Invalid choice. Please enter a number from 1 to 8.");
+            continue;
+        }
+    
+        System.out.println("\n\nDo you want to continue? (Y or N)");
+        String continueChoice = scn.nextLine();
+    
+        if (continueChoice.equalsIgnoreCase("N")) {
+            break;
+        }
+    }
+
+        scn.close();
     }
 }
