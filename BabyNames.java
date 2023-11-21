@@ -42,12 +42,12 @@ public class BabyNames {
                 femaleNameCount++;
             }
         }
-        printSummary("Total names = ", maleNameCount + femaleNameCount);
-        printSummary("Total births = ", totalMaleBirths + totalFemaleBirths);
-        printSummary("Total girls' names = ", femaleNameCount);
-        printSummary("Total girls = ", totalFemaleBirths);
-        printSummary("Total boys' names = ", maleNameCount);
-        printSummary("Total boys = ", totalMaleBirths);
+        printSummary("Total names", maleNameCount + femaleNameCount);
+        printSummary("Total births", totalMaleBirths + totalFemaleBirths);
+        printSummary("Total girls' names", femaleNameCount);
+        printSummary("Total girls", totalFemaleBirths);
+        printSummary("Total boys' names", maleNameCount);
+        printSummary("Total boys", totalMaleBirths);
     }
     
     // Helper method to print formatted summary messages.
@@ -85,9 +85,16 @@ public class BabyNames {
         return -1;
     }
     
-    // Tests the getRank method with predefined values.
+    // Tests the getRank method with user-defined values.
     public void testGetRank() {
-        System.out.println(getRank(2012, "Mason", "M"));
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Enter year: ");
+        int year = Integer.parseInt(scn.nextLine());
+        System.out.print("Enter name: ");
+        String name = scn.nextLine();
+        System.out.print("Enter gender: ");
+        String gender = scn.nextLine();
+        System.out.println("Rank of " + name + " with gender " + gender + " is: " + getRank(year, name, gender));
     }
     
     // Retrieves the name corresponding to the rank in a specific year and gender.
@@ -105,9 +112,16 @@ public class BabyNames {
         return "NO NAME";
     }
     
-    // Tests the getName method with predefined values.
+    // Tests the getName method with user-defined values.
     public void testGetName() {
-        System.out.println(getName(2012, 2, "M"));
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Enter year: ");
+        int year = Integer.parseInt(scn.nextLine());
+        System.out.print("Enter rank: ");
+        int rank = Integer.parseInt(scn.nextLine());
+        System.out.print("Enter gender: ");
+        String gender = scn.nextLine();
+        System.out.println("Name at rank " + rank + " with gender " + gender + " is: " + getName(year, rank, gender));
     }
     
     // Determines what a name from one year would have been in another year.
@@ -121,9 +135,18 @@ public class BabyNames {
         System.out.println(name + " born in " + year + " would be " + newName + " if born in " + newYear + ".");
     }
     
-    // Tests whatIsNameInYear with predefined values.
+    // Tests whatIsNameInYear with user-defined values.
     public void testWhatIsNameInYear() {
-        whatIsNameInYear("Valerie", 2001, 1920, "F");
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = scn.nextLine();
+        System.out.print("Enter year: ");
+        int year = Integer.parseInt(scn.nextLine());
+        System.out.print("Enter new year: ");
+        int newYear = Integer.parseInt(scn.nextLine());
+        System.out.print("Enter gender: ");
+        String gender = scn.nextLine();
+        whatIsNameInYear(name, year, newYear, gender);
     }
     
     // Finds the year when a name had its highest rank.
@@ -152,9 +175,14 @@ public class BabyNames {
         return highestYear;
     }
     
-    // Tests yearOfHighestRank with predefined values.
+    // Tests yearOfHighestRank with user-defined values.
     public void testYearOfHighestRank() {
-        System.out.println(yearOfHighestRank("Mason", "M"));
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = scn.nextLine();
+        System.out.print("Enter gender: ");
+        String gender = scn.nextLine();
+        System.out.println(name + " with the gender " + gender + " had highest rank in the year: " + yearOfHighestRank(name, gender));
     }
     
     // Calculates the average rank of a name over all files.
@@ -185,9 +213,14 @@ public class BabyNames {
         return averageRank;
     }
     
-    // Tests getAverageRank with predefined values.
+    // Tests getAverageRank with user-defined values.
     public void testGetAverageRank() {
-        System.out.println(getAverageRank("Jacob", "M"));
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = scn.nextLine();
+        System.out.print("Enter gender: ");
+        String gender = scn.nextLine();
+        System.out.println(name + " with the gender " + gender + " has an average rank of " + getAverageRank(name, gender));
     }
     
     // Calculates total births of names ranked higher than a given name in a year.
@@ -208,9 +241,16 @@ public class BabyNames {
         return -1;
     }
     
-    // Tests getTotalBirthsRankedHigher with predefined values.
+    // Tests getTotalBirthsRankedHigher with user-defined values.
     public void testGetTotalBirthsRankedHigher() {
-        System.out.println(getTotalBirthsRankedHigher(2012, "William", "M"));
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Enter year: ");
+        int year = Integer.parseInt(scn.nextLine());
+        System.out.print("Enter name: ");
+        String name = scn.nextLine();
+        System.out.print("Enter gender: ");
+        String gender = scn.nextLine();
+        System.out.println(getTotalBirthsRankedHigher(year, name, gender) + " is the total no. of births with rank higher than " + name + " with the gender " + gender);
     }
     
     public static void main(String[] args) {
@@ -245,10 +285,10 @@ public class BabyNames {
             continue;
         }
     
-        System.out.println("\n\nDo you want to continue? (Y or N)");
+        System.out.println("\n\nDo you want to continue? (y or n)");
         String continueChoice = scn.nextLine();
     
-        if (continueChoice.equalsIgnoreCase("N")) {
+        if (continueChoice.equalsIgnoreCase("n")) {
             break;
         }
     }
