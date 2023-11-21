@@ -176,8 +176,29 @@ public class BabyNames {
         System.out.println(getAverageRank("Jacob", "M"));
     }
     
+    public int getTotalBirthsRankedHigher(int year, String name, String gender) {
+        FileResource fr = new FileResource();
+        //FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
+        int currentRank = 0;
+        int totalBirthsRankedHigher = 0;
+        for (CSVRecord record : fr.getCSVParser(false)) {
+            if (gender.equals(record.get(1))) {
+                currentRank++;
+                if (name.equals(record.get(0))) {
+                    return totalBirthsRankedHigher;
+                }
+                totalBirthsRankedHigher += Integer.parseInt(record.get(2));
+            }
+        }
+        return -1;
+    }
+    
+    public void testGetTotalBirthsRankedHigher() {
+        System.out.println(getTotalBirthsRankedHigher(2012, "William", "M"));
+    }
+    
     public static void main(String[] args) {
         BabyNames bn = new BabyNames();
-        bn.testGetAverageRank();
+        bn.testGetTotalBirthsRankedHigher();
     }
 }
