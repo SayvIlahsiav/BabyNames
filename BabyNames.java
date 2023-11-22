@@ -98,6 +98,22 @@ public class BabyNames {
         return false;
     }
     
+    // Checks for valid gender F or M
+    public String getValidGenderInput() {
+        Scanner scanner = new Scanner(System.in);
+        String gender;
+        while (true) {
+            System.out.print("Enter gender (F/M): ");
+            gender = scanner.nextLine().toUpperCase();
+    
+            if (gender.equals("F") || gender.equals("M")) {
+                return gender;
+            } else {
+                System.out.println("Invalid Gender. Try again.");
+            }
+        }
+    }
+    
     //  Returns the rank of a name for a given year and gender.
     public int getRank(int year, String name, String gender) {
         //FileResource fr = new FileResource();
@@ -120,8 +136,9 @@ public class BabyNames {
         int year = Integer.parseInt(scn.nextLine());
         System.out.print("Enter name: ");
         String name = scn.nextLine();
-        System.out.print("Enter gender: ");
-        String gender = scn.nextLine();
+        System.out.print("Enter gender (F/M): ");
+        String gender = getValidGenderInput();
+
         if(getRank(year, name, gender) == -1) {
             System.out.println("Name " + name + " with gender " + gender + " does not exist in the year " + year);
         }
@@ -150,8 +167,9 @@ public class BabyNames {
         int year = Integer.parseInt(scn.nextLine());
         System.out.print("Enter rank: ");
         int rank = Integer.parseInt(scn.nextLine());
-        System.out.print("Enter gender: ");
-        String gender = scn.nextLine();
+        System.out.print("Enter gender (F/M): ");
+        String gender = getValidGenderInput();
+
         if(getName(year, rank, gender).isEmpty()) {
             System.out.println("Record at rank " + rank + " does not exist for the gender " + gender);
         }
@@ -178,8 +196,9 @@ public class BabyNames {
         int year = Integer.parseInt(scn.nextLine());
         System.out.print("Enter new year: ");
         int newYear = Integer.parseInt(scn.nextLine());
-        System.out.print("Enter gender: ");
-        String gender = scn.nextLine();
+        System.out.print("Enter gender (F/M): ");
+        String gender = getValidGenderInput();
+
         if (!doesNameExist(name, gender, year)) {
             System.out.println("Name " + name + " with gender " + gender + " does not exist in the year " + year);
         }
@@ -220,8 +239,9 @@ public class BabyNames {
         Scanner scn = new Scanner(System.in);
         System.out.print("Enter name: ");
         String name = scn.nextLine();
-        System.out.print("Enter gender: ");
-        String gender = scn.nextLine();
+        System.out.print("Enter gender (F/M): ");
+        String gender = getValidGenderInput();
+
         System.out.println(name + " with the gender " + gender + " had highest rank in the year: " + yearOfHighestRank(name, gender));
     }
     
@@ -258,8 +278,9 @@ public class BabyNames {
         Scanner scn = new Scanner(System.in);
         System.out.print("Enter name: ");
         String name = scn.nextLine();
-        System.out.print("Enter gender: ");
-        String gender = scn.nextLine();
+        System.out.print("Enter gender (F/M): ");
+        String gender = getValidGenderInput();
+
         System.out.println(name + " with the gender " + gender + " has an average rank of " + getAverageRank(name, gender));
     }
     
@@ -288,8 +309,9 @@ public class BabyNames {
         int year = Integer.parseInt(scn.nextLine());
         System.out.print("Enter name: ");
         String name = scn.nextLine();
-        System.out.print("Enter gender: ");
-        String gender = scn.nextLine();
+        System.out.print("Enter gender (F/M): ");
+        String gender = getValidGenderInput();
+
         if (!doesNameExist(name, gender, year)) {
             System.out.println("Name " + name + " with gender " + gender + " does not exist in the year " + year);
         }
