@@ -70,6 +70,7 @@ public class BabyNames {
         totalBirths(fr);
     }
     
+    // Checks if file for a given year exists
     private FileResource loadFileResource(int year) throws ResourceException {
         String fileName = "us_babynames/us_babynames_by_year/yob" + year + ".csv";
         File file = new File(fileName);
@@ -77,6 +78,24 @@ public class BabyNames {
             throw new ResourceException("Data for year " + year + " doesn't exist.");
         }
         return new FileResource(fileName);
+    }
+    
+    // Checks if a name exists in a particular year
+    public boolean doesNameExist(String name, String gender, int year) {
+        try {
+            FileResource fr = loadFileResource(year);
+            for (CSVRecord rec : fr.getCSVParser(false)) {
+                String currentName = rec.get(0);
+                String currentGender = rec.get(1);
+                if (currentName.equalsIgnoreCase(name) && currentGender.equalsIgnoreCase(gender)) {
+                    return true;
+                }
+            }
+        } catch (ResourceException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return false;
     }
     
     //  Returns the rank of a name for a given year and gender.
@@ -103,7 +122,10 @@ public class BabyNames {
         String name = scn.nextLine();
         System.out.print("Enter gender: ");
         String gender = scn.nextLine();
-        System.out.println("Rank of " + name + " with gender " + gender + " is: " + getRank(year, name, gender));
+        if(getRank(year, name, gender) == -1) {
+            System.out.println("Name " + name + " with gender " + gender + " does not exist in the year " + year);
+        }
+        else System.out.println("Rank of " + name + " with gender " + gender + " is: " + getRank(year, name, gender));
     }
     
     // Retrieves the name corresponding to the rank in a specific year and gender.
@@ -118,7 +140,7 @@ public class BabyNames {
                 if (currentRank == rank) return record.get(0);
             }
         }
-        return "NO NAME";
+        return "";
     }
     
     // Tests the getName method with user-defined values.
@@ -130,7 +152,10 @@ public class BabyNames {
         int rank = Integer.parseInt(scn.nextLine());
         System.out.print("Enter gender: ");
         String gender = scn.nextLine();
-        System.out.println("Name at rank " + rank + " with gender " + gender + " is: " + getName(year, rank, gender));
+        if(getName(year, rank, gender).isEmpty()) {
+            System.out.println("Record at rank " + rank + " does not exist for the gender " + gender);
+        }
+        else System.out.println("Name at rank " + rank + " with gender " + gender + " is: " + getName(year, rank, gender));
     }
     
     // Determines what a name from one year would have been in another year.
@@ -155,7 +180,13 @@ public class BabyNames {
         int newYear = Integer.parseInt(scn.nextLine());
         System.out.print("Enter gender: ");
         String gender = scn.nextLine();
-        whatIsNameInYear(name, year, newYear, gender);
+        if (!doesNameExist(name, gender, year)) {
+            System.out.println("Name " + name + " with gender " + gender + " does not exist in the year " + year);
+        }
+        else if (!doesNameExist(name, gender, newYear)) {
+            System.out.println("Name " + name + " with gender " + gender + " does not exist in the new year " + newYear);
+        }
+        else whatIsNameInYear(name, year, newYear, gender);
     }
     
     // Finds the year when a name had its highest rank.
@@ -259,7 +290,10 @@ public class BabyNames {
         String name = scn.nextLine();
         System.out.print("Enter gender: ");
         String gender = scn.nextLine();
-        System.out.println(getTotalBirthsRankedHigher(year, name, gender) + " is the total no. of births with rank higher than " + name + " with the gender " + gender);
+        if (!doesNameExist(name, gender, year)) {
+            System.out.println("Name " + name + " with gender " + gender + " does not exist in the year " + year);
+        }
+        else System.out.println(getTotalBirthsRankedHigher(year, name, gender) + " is the total no. of births with rank higher than " + name + " with the gender " + gender);
     }
     
     public static void main(String[] args) {
