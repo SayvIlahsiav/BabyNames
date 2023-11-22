@@ -70,10 +70,19 @@ public class BabyNames {
         totalBirths(fr);
     }
     
+    private FileResource loadFileResource(int year) throws ResourceException {
+        String fileName = "us_babynames/us_babynames_by_year/yob" + year + ".csv";
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new ResourceException("Data for year " + year + " doesn't exist.");
+        }
+        return new FileResource(fileName);
+    }
+    
     //  Returns the rank of a name for a given year and gender.
     public int getRank(int year, String name, String gender) {
         //FileResource fr = new FileResource();
-        FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
+        FileResource fr = loadFileResource(year);
         int rank = 0;
         for (CSVRecord record : fr.getCSVParser(false)) {
             if (gender.equals(record.get(1)))
@@ -100,7 +109,7 @@ public class BabyNames {
     // Retrieves the name corresponding to the rank in a specific year and gender.
     public String getName(int year, int rank, String gender) {
         //FileResource fr = new FileResource();
-        FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
+        FileResource fr = loadFileResource(year);
         int currentRank = 0;
         for (CSVRecord record : fr.getCSVParser(false)) {
             if (gender.equals(record.get(1)))
@@ -226,7 +235,7 @@ public class BabyNames {
     // Calculates total births of names ranked higher than a given name in a year.
     public int getTotalBirthsRankedHigher(int year, String name, String gender) {
         //FileResource fr = new FileResource();
-        FileResource fr = new FileResource("us_babynames/us_babynames_by_year/yob" + year + ".csv");
+        FileResource fr = loadFileResource(year);
         int currentRank = 0;
         int totalBirthsRankedHigher = 0;
         for (CSVRecord record : fr.getCSVParser(false)) {
@@ -272,17 +281,39 @@ public class BabyNames {
         String choice = scn.nextLine();
         System.out.println();
         
-        if (choice.equals("1")) bn.printNames();
-        else if (choice.equals("2")) bn.testTotalBirths();
-        else if (choice.equals("3")) bn.testGetRank();
-        else if (choice.equals("4")) bn.testGetName();
-        else if (choice.equals("5")) bn.testWhatIsNameInYear();
-        else if (choice.equals("6")) bn.testYearOfHighestRank();
-        else if (choice.equals("7")) bn.testGetAverageRank();
-        else if (choice.equals("8")) bn.testGetTotalBirthsRankedHigher();
-        else {
-            System.out.println("Invalid choice. Please enter a number from 1 to 8.");
-            continue;
+        try {
+            switch (choice) {
+                case "1": 
+                    bn.printNames(); 
+                    break;
+                case "2": 
+                    bn.testTotalBirths(); 
+                    break;
+                case "3": 
+                    bn.testGetRank(); 
+                    break;
+                case "4": 
+                    bn.testGetName(); 
+                    break;
+                case "5": 
+                    bn.testWhatIsNameInYear(); 
+                    break;
+                case "6": 
+                    bn.testYearOfHighestRank(); 
+                    break;
+                case "7": 
+                    bn.testGetAverageRank(); 
+                    break;
+                case "8": 
+                    bn.testGetTotalBirthsRankedHigher(); 
+                    break;
+                default: 
+                    System.out.println("Invalid choice. Please enter a number from 1 to 8.");
+                    continue;
+            }
+        } catch (ResourceException e) {
+            System.out.println(e.getMessage());
+            continue; // This will restart the loop, prompting the user again.
         }
     
         System.out.println("\n\nDo you want to continue? (y or n)");
